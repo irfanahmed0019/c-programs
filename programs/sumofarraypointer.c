@@ -1,30 +1,20 @@
 #include <stdio.h>
 
-int main()
+int main(void)
 {
-    int a[50], n, i, sum = 0;
-    int *p;
-
-    printf("Enter number of elements: ");
-    scanf("%d", &n);
-
-    printf("Enter %d elements:\n", n);
-    for (i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    p = a;   /* pointer to the first element of the array */
-
-    /* Add elements by moving the pointer */
-    for (i = 0; i < n; i++)
-    {
-        sum = sum + *p;
-        p++;
+    int a[100], n;
+    printf("Enter number of elements (1-100): ");
+    if (scanf("%d", &n) != 1 || n < 1 || n > 100) {
+        printf("Invalid array size.\n");
+        return 1;
     }
-
-    printf("The array elements are: ");
-    for (i = 0; i < n; i++)
-        printf("%d ", a[i]);
-
-    printf("\nSum of elements = %d\n", sum);
+    printf("Enter %d integers: ", n);
+    for (int i = 0; i < n; i++) {
+        if (scanf("%d", &a[i]) != 1) return 1;
+    }
+    const int *p = a;
+    long sum = 0;
+    for (int i = 0; i < n; i++) sum += *(p + i);
+    printf("Sum = %ld\n", sum);
     return 0;
 }

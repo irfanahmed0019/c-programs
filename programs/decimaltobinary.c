@@ -1,27 +1,20 @@
 #include <stdio.h>
+#include <limits.h>
 
-int main()
+int main(void)
 {
-    int num, n, bin[32], i = 0, j;
-
-    printf("Enter a decimal number: ");
-    scanf("%d", &num);
-    n = num;
-
-    /* Store the remainders in the array */
-    while (num > 0)
-    {
-        bin[i] = num % 2;
-        num = num / 2;
-        i++;
-    }
-
-    /* Print the array in reverse order */
-    printf("Decimal number = %d\n", n);
-    printf("Binary equivalent = ");
-    for (j = i - 1; j >= 0; j--)
-        printf("%d", bin[j]);
+    int number;
+    int bits[32], count = 0;
+    long input;
+    printf("Enter a non-negative decimal integer: ");
+    if (scanf("%ld", &input) != 1 || input < 0 || input > INT_MAX) return 1;
+    number = (int)input;
+    do {
+        bits[count++] = number % 2;
+        number /= 2;
+    } while (number != 0);
+    printf("Binary = ");
+    for (int i = count - 1; i >= 0; i--) printf("%d", bits[i]);
     printf("\n");
-
     return 0;
 }

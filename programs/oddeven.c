@@ -1,33 +1,26 @@
 #include <stdio.h>
 
-int main()
+int main(void)
 {
-    int a[50], even[50], odd[50], n, i, e = 0, o = 0;
-
-    printf("Enter number of elements: ");
-    scanf("%d", &n);
-
-    printf("Enter %d elements:\n", n);
-    for (i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    /* Separate odd and even numbers into different arrays */
-    for (i = 0; i < n; i++)
-    {
-        if (a[i] % 2 == 0)
-            even[e++] = a[i];
-        else
-            odd[o++] = a[i];
+    int a[100], n;
+    printf("Enter number of elements (1-100): ");
+    if (scanf("%d", &n) != 1 || n < 1 || n > 100) {
+        printf("Invalid array size.\n");
+        return 1;
     }
-
-    printf("Even numbers: ");
-    for (i = 0; i < e; i++)
-        printf("%d ", even[i]);
-
-    printf("\nOdd numbers:  ");
-    for (i = 0; i < o; i++)
-        printf("%d ", odd[i]);
+    printf("Enter %d integers: ", n);
+    for (int i = 0; i < n; i++) {
+        if (scanf("%d", &a[i]) != 1) return 1;
+    }
+    int odd[100], even[100], odd_count = 0, even_count = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] % 2 == 0) even[even_count++] = a[i];
+        else odd[odd_count++] = a[i];
+    }
+    printf("Odd: ");
+    for (int i = 0; i < odd_count; i++) printf("%d ", odd[i]);
+    printf("\nEven: ");
+    for (int i = 0; i < even_count; i++) printf("%d ", even[i]);
     printf("\n");
-
     return 0;
 }

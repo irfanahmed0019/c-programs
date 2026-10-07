@@ -1,24 +1,19 @@
 #include <stdio.h>
 
-int main()
+int main(void)
 {
-    int a[10][10], m, n, i, j;
-
-    printf("Enter rows and columns: ");
-    scanf("%d %d", &m, &n);
-
-    printf("Enter elements of the array:\n");
-    for (i = 0; i < m; i++)
-        for (j = 0; j < n; j++)
-            scanf("%d", &a[i][j]);
-
-    printf("The two dimensional array is:\n");
-    for (i = 0; i < m; i++)
-    {
-        for (j = 0; j < n; j++)
-            printf("%d\t", a[i][j]);
+    int a[10][10], rows, columns;
+    printf("Enter rows and columns (1-10 each): ");
+    if (scanf("%d %d", &rows, &columns) != 2 || rows < 1 || rows > 10 ||
+        columns < 1 || columns > 10) return 1;
+    printf("Enter matrix elements: ");
+    for (int i = 0; i < rows; i++)
+        for (int j = 0; j < columns; j++)
+            if (scanf("%d", &a[i][j]) != 1) return 1;
+    printf("Matrix:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) printf("%d\t", a[i][j]);
         printf("\n");
     }
-
     return 0;
 }

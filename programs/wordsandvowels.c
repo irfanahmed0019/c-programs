@@ -1,33 +1,20 @@
 #include <stdio.h>
-#include <string.h>
+#include <ctype.h>
 
-int main()
+int main(void)
 {
-    char str[100];
-    int i, words = 0, vowels = 0;
-    char ch;
-
+    char text[1000];
+    int words = 0, vowels = 0, in_word = 0;
     printf("Enter a string: ");
-    fgets(str, sizeof(str), stdin);
-    str[strcspn(str, "\n")] = '\0';   /* remove the newline at the end */
-
-    for (i = 0; str[i] != '\0'; i++)
-    {
-        ch = str[i];
-
-        /* Check for vowels (both cases) */
-        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||
-            ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
-            vowels++;
-
-        /* A word starts at a non-space after a space (or at the start) */
-        if (ch != ' ' && (i == 0 || str[i - 1] == ' '))
-            words++;
+    if (!fgets(text, sizeof text, stdin)) return 1;
+    for (int i = 0; text[i] != '\0'; i++) {
+        unsigned char ch = (unsigned char)text[i];
+        int lower = tolower(ch);
+        if (lower == 'a' || lower == 'e' || lower == 'i' ||
+            lower == 'o' || lower == 'u') vowels++;
+        if (isspace(ch)) in_word = 0;
+        else if (!in_word) { words++; in_word = 1; }
     }
-
-    printf("The string is: %s\n", str);
-    printf("Number of words  = %d\n", words);
-    printf("Number of vowels = %d\n", vowels);
-
+    printf("Words = %d\nVowels = %d\n", words, vowels);
     return 0;
 }

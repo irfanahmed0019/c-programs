@@ -1,21 +1,12 @@
 #include <stdio.h>
 
-int main()
+int main(void)
 {
-    int a, b;
-    int *p, *q;   /* pointer variables */
-
+    double a, b, *p = &a, *q = &b;
     printf("Enter two numbers: ");
-    scanf("%d %d", &a, &b);
-
-    p = &a;   /* p points to a */
-    q = &b;   /* q points to b */
-
-    printf("Numbers are %d and %d\n", *p, *q);
-    printf("Sum        = %d\n", *p + *q);
-    printf("Difference = %d\n", *p - *q);
-    printf("Product    = %d\n", (*p) * (*q));
-    printf("Quotient   = %.2f\n", (float)*p / *q);
-
+    if (scanf("%lf %lf", p, q) != 2) return 1;
+    printf("Sum = %g\nDifference = %g\nProduct = %g\n", *p + *q, *p - *q, *p * *q);
+    if (*q == 0) printf("Division by zero is not allowed\n");
+    else printf("Quotient = %g\n", *p / *q);
     return 0;
 }

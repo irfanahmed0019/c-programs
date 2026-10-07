@@ -1,29 +1,23 @@
 #include <stdio.h>
 
-/* Function to find the sum of array elements */
-int findSum(int a[], int n)
+long sum(const int a[], int n)
 {
-    int i, sum = 0;
-    for (i = 0; i < n; i++)
-        sum = sum + a[i];
-    return sum;
+    long total = 0;
+    for (int i = 0; i < n; i++) total += a[i];
+    return total;
 }
-
-int main()
+int main(void)
 {
-    int a[50], n, i;
-
-    printf("Enter number of elements: ");
-    scanf("%d", &n);
-
-    printf("Enter %d elements:\n", n);
-    for (i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    printf("The array elements are: ");
-    for (i = 0; i < n; i++)
-        printf("%d ", a[i]);
-
-    printf("\nSum of elements = %d\n", findSum(a, n));
+    int a[100], n;
+    printf("Enter number of elements (1-100): ");
+    if (scanf("%d", &n) != 1 || n < 1 || n > 100) {
+        printf("Invalid array size.\n");
+        return 1;
+    }
+    printf("Enter %d integers: ", n);
+    for (int i = 0; i < n; i++) {
+        if (scanf("%d", &a[i]) != 1) return 1;
+    }
+    printf("Sum = %ld\n", sum(a, n));
     return 0;
 }

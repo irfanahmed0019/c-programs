@@ -1,25 +1,18 @@
 #include <stdio.h>
 
-/* Function receives addresses, so changes affect the original variables */
-void swap(int *x, int *y)
+void swap(int *first, int *second)
 {
-    int temp;
-    temp = *x;
-    *x = *y;
-    *y = temp;
+    int temporary = *first;
+    *first = *second;
+    *second = temporary;
 }
-
-int main()
+int main(void)
 {
     int a, b;
-
-    printf("Enter two numbers: ");
-    scanf("%d %d", &a, &b);
-
-    printf("Before swapping: a = %d, b = %d\n", a, b);
-
-    swap(&a, &b);   /* pass the addresses (call by reference) */
-
-    printf("After swapping:  a = %d, b = %d\n", a, b);
+    printf("Enter two integers: ");
+    if (scanf("%d %d", &a, &b) != 2) return 1;
+    printf("Before: %d %d\n", a, b);
+    swap(&a, &b);
+    printf("After: %d %d\n", a, b);
     return 0;
 }

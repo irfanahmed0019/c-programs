@@ -1,25 +1,16 @@
 #include <stdio.h>
 
-int main()
+int main(void)
 {
-    FILE *fp;
-    int num, sum = 0;
-
-    fp = fopen("numbers.txt", "r");   /* open the file in read mode */
-    if (fp == NULL)
-    {
+    FILE *fp = fopen("numbers.txt", "r");
+    int number;
+    long sum = 0;
+    if (fp == NULL) {
         printf("Cannot open numbers.txt\n");
         return 1;
     }
-
-    printf("Numbers read from numbers.txt: ");
-    while (fscanf(fp, "%d", &num) == 1)
-    {
-        printf("%d ", num);
-        sum = sum + num;
-    }
+    while (fscanf(fp, "%d", &number) == 1) sum += number;
     fclose(fp);
-
-    printf("\nSum = %d\n", sum);
+    printf("Sum = %ld\n", sum);
     return 0;
 }

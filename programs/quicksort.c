@@ -1,56 +1,33 @@
 #include <stdio.h>
 
-/* Quick sort: pick the first element as pivot and partition around it */
-void quickSort(int a[], int low, int high)
+void quicksort(int a[], int low, int high)
 {
-    int i, j, pivot, temp;
-
-    if (low < high)
-    {
-        pivot = a[low];
-        i = low;
-        j = high;
-
-        while (i < j)
-        {
-            while (a[i] <= pivot && i < high)
-                i++;
-            while (a[j] > pivot)
-                j--;
-            if (i < j)
-            {
-                temp = a[i];
-                a[i] = a[j];
-                a[j] = temp;
-            }
+    if (low >= high) return;
+    int pivot = a[high], split = low;
+    for (int j = low; j < high; j++) {
+        if (a[j] <= pivot) {
+            int temp = a[j]; a[j] = a[split]; a[split++] = temp;
         }
-
-        temp = a[low];
-        a[low] = a[j];
-        a[j] = temp;
-
-        quickSort(a, low, j - 1);
-        quickSort(a, j + 1, high);
     }
+    int temp = a[split]; a[split] = a[high]; a[high] = temp;
+    quicksort(a, low, split - 1);
+    quicksort(a, split + 1, high);
 }
-
-int main()
+int main(void)
 {
-    int a[50], n, i;
-
-    printf("Enter number of elements: ");
-    scanf("%d", &n);
-
-    printf("Enter %d elements:\n", n);
-    for (i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    quickSort(a, 0, n - 1);
-
+    int a[100], n;
+    printf("Enter number of elements (1-100): ");
+    if (scanf("%d", &n) != 1 || n < 1 || n > 100) {
+        printf("Invalid array size.\n");
+        return 1;
+    }
+    printf("Enter %d integers: ", n);
+    for (int i = 0; i < n; i++) {
+        if (scanf("%d", &a[i]) != 1) return 1;
+    }
+    quicksort(a, 0, n - 1);
     printf("Sorted array: ");
-    for (i = 0; i < n; i++)
-        printf("%d ", a[i]);
+    for (int i = 0; i < n; i++) printf("%d ", a[i]);
     printf("\n");
-
     return 0;
 }

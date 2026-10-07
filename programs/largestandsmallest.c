@@ -1,41 +1,29 @@
 #include <stdio.h>
 
-/* Function to find the largest element */
-int findLargest(int a[], int n)
+int largest(const int a[], int n)
 {
-    int i, big = a[0];
-    for (i = 1; i < n; i++)
-        if (a[i] > big)
-            big = a[i];
-    return big;
+    int value = a[0];
+    for (int i = 1; i < n; i++) if (a[i] > value) value = a[i];
+    return value;
 }
-
-/* Function to find the smallest element */
-int findSmallest(int a[], int n)
+int smallest(const int a[], int n)
 {
-    int i, small = a[0];
-    for (i = 1; i < n; i++)
-        if (a[i] < small)
-            small = a[i];
-    return small;
+    int value = a[0];
+    for (int i = 1; i < n; i++) if (a[i] < value) value = a[i];
+    return value;
 }
-
-int main()
+int main(void)
 {
-    int a[50], n, i;
-
-    printf("Enter number of elements: ");
-    scanf("%d", &n);
-
-    printf("Enter %d elements:\n", n);
-    for (i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    printf("The array elements are: ");
-    for (i = 0; i < n; i++)
-        printf("%d ", a[i]);
-
-    printf("\nLargest element  = %d\n", findLargest(a, n));
-    printf("Smallest element = %d\n", findSmallest(a, n));
+    int a[100], n;
+    printf("Enter number of elements (1-100): ");
+    if (scanf("%d", &n) != 1 || n < 1 || n > 100) {
+        printf("Invalid array size.\n");
+        return 1;
+    }
+    printf("Enter %d integers: ", n);
+    for (int i = 0; i < n; i++) {
+        if (scanf("%d", &a[i]) != 1) return 1;
+    }
+    printf("Largest = %d\nSmallest = %d\n", largest(a, n), smallest(a, n));
     return 0;
 }

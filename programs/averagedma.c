@@ -1,22 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
+int main(void)
 {
-    float *p, *q;
-
-    /* Allocate memory dynamically for two floats */
-    p = (float *)malloc(sizeof(float));
-    q = (float *)malloc(sizeof(float));
-
+    double *numbers = malloc(2 * sizeof *numbers);
+    if (numbers == NULL) { fprintf(stderr, "Allocation failed.\n"); return 1; }
     printf("Enter two floating-point numbers: ");
-    scanf("%f %f", p, q);
-
-    printf("Numbers are %.2f and %.2f\n", *p, *q);
-    printf("Average = %.2f\n", (*p + *q) / 2);
-
-    free(p);   /* release the allocated memory */
-    free(q);
-
+    if (scanf("%lf %lf", &numbers[0], &numbers[1]) != 2 ) { free(numbers); return 1; }
+    printf("Average = %.2f\n", numbers[0] / 2 + numbers[1] / 2);
+    free(numbers);
     return 0;
 }

@@ -1,46 +1,33 @@
 #include <stdio.h>
 
-int main()
+int main(void)
 {
-    int a[50], n, i, key;
-    int low, high, mid = 0, found = 0;
-
-    printf("Enter number of elements: ");
-    scanf("%d", &n);
-
-    printf("Enter %d elements in sorted order:\n", n);
-    for (i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    printf("Enter the element to search: ");
-    scanf("%d", &key);
-
-    low = 0;
-    high = n - 1;
-
-    /* Keep dividing the search range into two halves */
-    while (low <= high)
-    {
-        mid = (low + high) / 2;
-        if (a[mid] == key)
-        {
-            found = 1;
-            break;
-        }
-        else if (key > a[mid])
-            low = mid + 1;
-        else
-            high = mid - 1;
+    int a[100], n;
+    printf("Enter number of elements (1-100): ");
+    if (scanf("%d", &n) != 1 || n < 1 || n > 100) {
+        printf("Invalid array size.\n");
+        return 1;
     }
-
-    printf("The array elements are: ");
-    for (i = 0; i < n; i++)
-        printf("%d ", a[i]);
-
-    if (found == 1)
-        printf("\n%d found at position %d\n", key, mid + 1);
-    else
-        printf("\n%d not found in the array\n", key);
-
+    printf("Enter %d integers: ", n);
+    for (int i = 0; i < n; i++) {
+        if (scanf("%d", &a[i]) != 1) return 1;
+    }
+    for (int i = 1; i < n; i++) {
+        if (a[i] < a[i - 1]) {
+            printf("Enter the array in ascending order.\n");
+            return 1;
+        }
+    }
+    int key, low = 0, high = n - 1, position = -1;
+    printf("Enter search value: ");
+    if (scanf("%d", &key) != 1) return 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        if (a[mid] == key) { position = mid; break; }
+        if (a[mid] < key) low = mid + 1;
+        else high = mid - 1;
+    }
+    if (position < 0) printf("Not found\n");
+    else printf("Found at position %d\n", position + 1);
     return 0;
 }

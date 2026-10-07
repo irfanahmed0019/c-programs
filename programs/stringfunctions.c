@@ -1,37 +1,24 @@
 #include <stdio.h>
 #include <string.h>
 
-int main()
+int main(void)
 {
-    char s1[50], s2[50], copy[50], joined[100];
-    int len1, len2, result;
-
+    char first[100], second[100], copy[100], joined[200];
     printf("Enter first string: ");
-    scanf("%s", s1);
+    if (!fgets(first, sizeof first, stdin)) return 1;
+    first[strcspn(first, "\n")] = '\0';
     printf("Enter second string: ");
-    scanf("%s", s2);
-
-    /* strlen() finds the length of a string */
-    len1 = strlen(s1);
-    len2 = strlen(s2);
-    printf("\nLength of first string  = %d\n", len1);
-    printf("Length of second string = %d\n", len2);
-
-    /* strcpy() copies one string into another */
-    strcpy(copy, s1);
-    printf("Copied string = %s\n", copy);
-
-    /* strcat() joins two strings */
-    strcpy(joined, s1);
-    strcat(joined, s2);
-    printf("Concatenated string = %s\n", joined);
-
-    /* strcmp() compares two strings (0 means equal) */
-    result = strcmp(s1, s2);
-    if (result == 0)
-        printf("Both strings are equal\n");
-    else
-        printf("Strings are not equal (strcmp returns %d)\n", result);
-
+    if (!fgets(second, sizeof second, stdin)) return 1;
+    second[strcspn(second, "\n")] = '\0';
+    printf("Lengths: %zu and %zu\n", strlen(first), strlen(second));
+    strcpy(copy, first);
+    printf("Copy: %s\n", copy);
+    strcpy(joined, first);
+    strcat(joined, second);
+    printf("Joined: %s\n", joined);
+    int comparison = strcmp(first, second);
+    if (comparison == 0) printf("Strings are equal\n");
+    else if (comparison < 0) printf("First string comes before second\n");
+    else printf("First string comes after second\n");
     return 0;
 }

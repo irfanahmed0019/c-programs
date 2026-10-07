@@ -1,35 +1,27 @@
 #include <stdio.h>
 
-int main()
+int main(void)
 {
-    FILE *fp;
-    char name[30];
-    int reg, n, i;
-
-    fp = fopen("students.txt", "a");   /* open in append mode */
-    if (fp == NULL)
-    {
-        printf("Cannot open students.txt\n");
-        return 1;
+    int n, registration;
+    char name[100];
+    printf("Enter number of students (1-100): ");
+    if (scanf("%d", &n) != 1 || n < 1 || n > 100) return 1;
+    FILE *file = fopen("students.txt", "a");
+    if (file == NULL) { perror("students.txt"); return 1; }
+    for (int i = 0; i < n; i++) {
+        printf("Enter registration number: ");
+        if (scanf("%d", &registration) != 1) { fclose(file); return 1; }
+        printf("Enter name: ");
+        if (scanf(" %99[^\n]", name) != 1) { fclose(file); return 1; }
+        if (fprintf(file, "%d %s\n", registration, name) < 0) { fclose(file); return 1; }
     }
-
-    printf("Enter number of students: ");
-    scanf("%d", &n);
-
-    for (i = 0; i < n; i++)
-    {
-        printf("Enter reg.no and name: ");
-        scanf("%d %s", &reg, name);
-        fprintf(fp, "%d %s\n", reg, name);   /* write the record to the file */
-    }
-    fclose(fp);
-
-    /* Read and display the file contents */
-    fp = fopen("students.txt", "r");
-    printf("\nContents of students.txt:\n");
-    while (fscanf(fp, "%d %s", &reg, name) == 2)
-        printf("%d %s\n", reg, name);
-    fclose(fp);
-
+    if (fclose(file) != 0) return 1;
+    file = fopen("students.txt", "r");
+    if (file == NULL) { perror("students.txt"); return 1; }
+    printf("Student records:\n");
+    int ch;
+    while ((ch = fgetc(file)) != EOF) putchar(ch);
+    int failed = ferror(file);
+    if (fclose(file) != 0 || failed) return 1;
     return 0;
 }

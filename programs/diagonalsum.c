@@ -1,33 +1,17 @@
 #include <stdio.h>
 
-int main()
+int main(void)
 {
-    int a[10][10], n, i, j, sum = 0;
-
-    printf("Enter the size of the square matrix: ");
-    scanf("%d", &n);
-
-    printf("Enter elements of the matrix:\n");
-    for (i = 0; i < n; i++)
-        for (j = 0; j < n; j++)
-            scanf("%d", &a[i][j]);
-
-    printf("The matrix is:\n");
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-            printf("%d\t", a[i][j]);
-        printf("\n");
-    }
-
-    /* Diagonal elements have equal row and column index */
-    printf("Diagonal elements are: ");
-    for (i = 0; i < n; i++)
-    {
-        printf("%d ", a[i][i]);
-        sum = sum + a[i][i];
-    }
-
-    printf("\nSum of diagonal elements = %d\n", sum);
+    int a[10][10], n;
+    long sum = 0;
+    printf("Enter square matrix size (1-10): ");
+    if (scanf("%d", &n) != 1 || n < 1 || n > 10) return 1;
+    printf("Enter matrix elements: ");
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            if (scanf("%d", &a[i][j]) != 1) return 1;
+    printf("Main diagonal: ");
+    for (int i = 0; i < n; i++) { printf("%d ", a[i][i]); sum += a[i][i]; }
+    printf("\nSum = %ld\n", sum);
     return 0;
 }

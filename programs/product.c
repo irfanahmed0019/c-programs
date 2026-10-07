@@ -1,29 +1,15 @@
 #include <stdio.h>
 
-struct Product
+struct Product { int id; char name[100]; double price; };
+int main(void)
 {
-    int id;
-    char name[30];
-    float price;
-};
-
-int main()
-{
-    struct Product p;
-    struct Product *ptr = &p;   /* pointer to structure */
-
-    /* Access members using -> */
+    struct Product product, *p = &product;
     printf("Enter product id: ");
-    scanf("%d", &ptr->id);
+    if (scanf("%d", &p->id) != 1) return 1;
     printf("Enter product name: ");
-    scanf("%s", ptr->name);
+    if (scanf(" %99[^\n]", p->name) != 1) return 1;
     printf("Enter price: ");
-    scanf("%f", &ptr->price);
-
-    printf("\nProduct Details\n");
-    printf("ID    : %d\n", ptr->id);
-    printf("Name  : %s\n", ptr->name);
-    printf("Price : %.2f\n", ptr->price);
-
+    if (scanf("%lf", &p->price) != 1 || p->price < 0) return 1;
+    printf("ID: %d\nName: %s\nPrice: %.2f\n", p->id, p->name, p->price);
     return 0;
 }
